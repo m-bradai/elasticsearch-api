@@ -1,0 +1,21 @@
+stages:
+  - build
+
+variables:
+  # Optional: keep Git quieter in logs
+  GIT_TERMINAL_PROMPT: "0"
+
+build:
+  stage: build
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache git
+  script:
+    # Clone using Authorization header so the token never appears in the URL
+    - git -c http.extraHeader="Authorization: Bearer ${GITHUB_ACCESS_TOKEN}" clone https://github.com/m-bradai/elasticsearch-api.git src
+    - cd src
+    # --- your build/test steps below ---
+    - echo "Cloned and ready to build"
+    # e.g., for Node: apk add --no-cache nodejs npm && npm ci && npm test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
