@@ -19,8 +19,8 @@ public class CityController {
     }
 
     @GetMapping("/search")
-    public List<City> searchCities(@RequestParam String query) throws IOException {
-        return citySearchService.searchCities(query);
+    public List<City> searchCities(@RequestParam String prefix) throws IOException {
+        return citySearchService.searchCities(prefix);
     }
 }
 
